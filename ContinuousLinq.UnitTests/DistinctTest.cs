@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using ContinuousLinq;
 using ContinuousLinq.Collections;
+using FluentAssertions;
 
 namespace ContinuousLinq.UnitTests
 {
@@ -25,7 +26,7 @@ namespace ContinuousLinq.UnitTests
         public void Construct_Always_ReturnsReadOnlyContinuousCollection()
         {
             ReadOnlyContinuousCollection<Person> result = _source.Distinct();
-            Assert.IsInstanceOfType(typeof(DistinctReadOnlyContinuousCollection<Person>), result);
+            result.Should().BeOfType<DistinctReadOnlyContinuousCollection<Person>>();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using System.Reflection;
+using FluentAssertions;
 
 namespace ContinuousLinq.UnitTests
 {
@@ -198,13 +199,13 @@ namespace ContinuousLinq.UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(Exception))]
         public void GetParameterAccessString_MultipleBranchAccess_ThrowsException()
         {
             InitializeTargetBrothersAgeAccess();
             _brotherPropertyAccessNode.Children.Add(new PropertyAccessNode(_brotherProperty));
 
-            _target.GetParameterPropertyAccessString();
+            var action = new Action(() => _target.GetParameterPropertyAccessString());
+            action.Should().Throw<Exception>();
         }
     }
 }

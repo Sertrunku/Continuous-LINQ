@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using ContinuousLinq.Aggregates;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace ContinuousLinq.UnitTests
@@ -176,10 +177,10 @@ namespace ContinuousLinq.UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void RemoveRange_GoesBeyondIndices_ThrowsException()
         {
-            _target.RemoveRange(0, 1);
+            var action = new Action(() => _target.RemoveRange(0, 1));
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Test]

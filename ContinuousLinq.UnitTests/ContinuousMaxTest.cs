@@ -19,7 +19,7 @@ namespace ContinuousLinq.UnitTests
         private static double Max { get; set; }
 
         [Test]
-        [Ignore]
+        [Ignore("Dummy Test. Ignored!")]
         public void Test()
         {
             // Collection with 1 item to make this test simple

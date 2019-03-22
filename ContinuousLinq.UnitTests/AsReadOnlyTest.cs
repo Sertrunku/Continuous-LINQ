@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using ContinuousLinq;
+using FluentAssertions;
 
 namespace ContinuousLinq.UnitTests
 {
@@ -25,7 +26,7 @@ namespace ContinuousLinq.UnitTests
         {
             ReadOnlyContinuousCollection<Person> result = _source.AsReadOnly();
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(typeof(PassThroughReadOnlyContinuousCollection<Person>), result);
+            result.Should().BeOfType< PassThroughReadOnlyContinuousCollection < Person >>();
         }
 
         [Test]

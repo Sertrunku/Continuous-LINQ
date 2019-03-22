@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.ComponentModel;
 using System.Collections.Generic;
+using FluentAssertions;
 
 namespace ContinuousLinq.UnitTests
 {
@@ -39,7 +40,7 @@ namespace ContinuousLinq.UnitTests
             PropertyAccessTree tree = ExpressionPropertyAnalyzer.Analyze(expression);
             
             Assert.AreEqual(1, tree.Children.Count);
-            Assert.IsInstanceOfType(typeof(ParameterNode), tree.Children[0]);
+            tree.Children[0].Should().BeOfType<ParameterNode>();
         }
 
         [Test]
@@ -152,7 +153,7 @@ namespace ContinuousLinq.UnitTests
 
             Assert.AreEqual(2, tree.Children.Count);
             PropertyAccessTreeNode parameterNode = tree.Children[0];
-            Assert.IsInstanceOfType(typeof(ParameterNode), parameterNode);
+            parameterNode.Should().BeOfType<ParameterNode>();
             Assert.AreEqual(1, parameterNode.Children.Count);
 
             PropertyAccessNode parameterAgeNode = (PropertyAccessNode)parameterNode.Children[0];
@@ -160,7 +161,7 @@ namespace ContinuousLinq.UnitTests
             Assert.AreEqual(0, parameterAgeNode.Children.Count);
 
             PropertyAccessTreeNode constantNode = tree.Children[1];
-            Assert.IsInstanceOfType(typeof(ConstantNode), constantNode);
+            constantNode.Should().BeOfType<ConstantNode>();
             Assert.AreEqual(localPersonAppearingAsConstantInExpression, ((ConstantNode)constantNode).Value);
             Assert.AreEqual(1, constantNode.Children.Count);
 
@@ -180,7 +181,7 @@ namespace ContinuousLinq.UnitTests
             Assert.AreEqual(2, tree.Children.Count);
 
             PropertyAccessTreeNode constantNode = tree.Children[1];
-            Assert.IsInstanceOfType(typeof(ConstantNode), constantNode);
+            constantNode.Should().BeOfType<ConstantNode>();
             Assert.AreEqual(this, ((ConstantNode)constantNode).Value);
             Assert.AreEqual(1, constantNode.Children.Count);
 
@@ -198,7 +199,7 @@ namespace ContinuousLinq.UnitTests
 
             Assert.AreEqual(1, tree.Children.Count);
             PropertyAccessTreeNode parameterNode = tree.Children[0];
-            Assert.IsInstanceOfType(typeof(ParameterNode), parameterNode);
+            parameterNode.Should().BeOfType<ParameterNode>();
             Assert.AreEqual(1, parameterNode.Children.Count);
 
             PropertyAccessNode nameNode = (PropertyAccessNode)parameterNode.Children[0];
@@ -225,7 +226,7 @@ namespace ContinuousLinq.UnitTests
 
             Assert.AreEqual(1, tree.Children.Count);
             PropertyAccessTreeNode parameterNode = tree.Children[0];
-            Assert.IsInstanceOfType(typeof(ParameterNode), parameterNode);
+            parameterNode.Should().BeOfType<ParameterNode>();
             Assert.AreEqual(1, parameterNode.Children.Count);
 
             PropertyAccessNode lengthNode = (PropertyAccessNode)parameterNode.Children[0];
@@ -252,7 +253,7 @@ namespace ContinuousLinq.UnitTests
 
             Assert.AreEqual(1, tree.Children.Count);
             PropertyAccessTreeNode parameterNode = tree.Children[0];
-            Assert.IsInstanceOfType(typeof(ParameterNode), parameterNode);
+            parameterNode.Should().BeOfType<ParameterNode>();
             Assert.AreEqual(2, parameterNode.Children.Count);
 
             PropertyAccessNode ageNode = (PropertyAccessNode)parameterNode.Children[0];
@@ -273,7 +274,7 @@ namespace ContinuousLinq.UnitTests
 
             Assert.AreEqual(1, tree.Children.Count);
             PropertyAccessTreeNode parameterNode = tree.Children[0];
-            Assert.IsInstanceOfType(typeof(ParameterNode), parameterNode);
+            parameterNode.Should().BeOfType<ParameterNode>();
             Assert.AreEqual(2, parameterNode.Children.Count);
 
             PropertyAccessNode ageNode = (PropertyAccessNode)parameterNode.Children[0];
@@ -296,7 +297,7 @@ namespace ContinuousLinq.UnitTests
 
             Assert.AreEqual(1, tree.Children.Count);
             PropertyAccessTreeNode parameterNode = tree.Children[0];
-            Assert.IsInstanceOfType(typeof(ParameterNode), parameterNode);
+            parameterNode.Should().BeOfType<ParameterNode>();
             Assert.AreEqual(0, parameterNode.Children.Count);
         }
 
@@ -310,11 +311,11 @@ namespace ContinuousLinq.UnitTests
             Assert.AreEqual(2, tree.Children.Count);
 
             PropertyAccessTreeNode parameterNode = tree.Children[0];
-            Assert.IsInstanceOfType(typeof(ParameterNode), parameterNode);
+            parameterNode.Should().BeOfType<ParameterNode>();
             Assert.AreEqual(1, parameterNode.Children.Count);
 
             PropertyAccessTreeNode constantNode = tree.Children[1];
-            Assert.IsInstanceOfType(typeof(ConstantNode), constantNode);
+            constantNode.Should().BeOfType<ConstantNode>();
             Assert.AreEqual(1, constantNode.Children.Count);
         }
 

@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Collections;
+using FluentAssertions;
 
 namespace ContinuousLinq.UnitTests
 {
@@ -21,7 +22,7 @@ namespace ContinuousLinq.UnitTests
         {
             _source = new List<int>() { 0, 1, 2, 3, 4 };
             PropertyAccessTree propertyAcessTree = new PropertyAccessTree();
-            _target = new MockReadOnlyContinuousCollection(_source); 
+            _target = new MockReadOnlyContinuousCollection(_source);
         }
 
 
@@ -32,10 +33,10 @@ namespace ContinuousLinq.UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(AccessViolationException))]
         public void SetIndexer_SourceHasValues_ThrowsException()
         {
-            _target[0] = 1;
+            var action = new Action(() => _target[0] = 1);
+            action.Should().Throw<AccessViolationException>();
         }
 
         [Test]
@@ -71,7 +72,7 @@ namespace ContinuousLinq.UnitTests
         {
             int[] output = new int[5];
             _target.CopyTo(output, 0);
-            
+
             for (int i = 0; i < 2; i++)
             {
                 Assert.AreEqual(_source[i], output[i]);
@@ -83,7 +84,7 @@ namespace ContinuousLinq.UnitTests
         {
             int[] output = new int[6];
             _target.CopyTo(output, 1);
-            
+
             for (int i = 0; i < 2; i++)
             {
                 Assert.AreEqual(_source[i], output[i + 1]);
@@ -120,11 +121,11 @@ namespace ContinuousLinq.UnitTests
         public void FireCollectionChange_AnyActionButReplace_NotifiesCountPropertyChanged()
         {
             int callCount = 0;
-            _target.PropertyChanged+= (sender, args) =>
-            {
-                callCount++;
-                Assert.AreEqual("Count", args.PropertyName);
-            };
+            _target.PropertyChanged += (sender, args) =>
+             {
+                 callCount++;
+                 Assert.AreEqual("Count", args.PropertyName);
+             };
 
             _target.FireBaseCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 
@@ -148,7 +149,7 @@ namespace ContinuousLinq.UnitTests
         public class MockReadOnlyContinuousCollection : ReadOnlyContinuousCollection<int>
         {
             public List<int> Source { get; set; }
- 
+
             public MockReadOnlyContinuousCollection(List<int> source)
             {
                 this.Source = source;

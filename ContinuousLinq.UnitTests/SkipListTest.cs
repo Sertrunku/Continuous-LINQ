@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace ContinuousLinq.UnitTests
@@ -97,21 +98,21 @@ namespace ContinuousLinq.UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(KeyNotFoundException))]
         public void GetValue_NoItems_Throws()
         {
-            _target.GetValue(0);
+            var action = new Action(() => _target.GetValue(0));
+            action.Should().Throw<KeyNotFoundException>();
         }
 
         [Test]
-        [ExpectedException(typeof(KeyNotFoundException))]
         public void GetValue_HasItems_Throws()
         {
             _target.Add(1, 0);
             _target.Add(-9, 0);
             _target.Add(100, 0);
 
-            _target.GetValue(0);
+            var action = new Action(() => _target.GetValue(0));
+            action.Should().Throw<KeyNotFoundException>();
         }
     }
 }
